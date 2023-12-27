@@ -19,7 +19,7 @@ function Lane({ id, url, onUrlChange, onClose }) {
 
     const onRefresh = () => {
         setIframeUrl(''); // Temporarily set to an empty string to force reload
-        setTimeout(() => setIframeUrl(inputValue), 0); // Then immediately set back to the original URL
+        setTimeout(() => setIframeUrl(inputValue), 50); // Then immediately set back to the original URL
     };
 
     return (
@@ -46,31 +46,20 @@ function Lane({ id, url, onUrlChange, onClose }) {
 }
 
 export default function Lanes() {
-    const [columns, setColumns] = useState([]);
 
-    // Effect hook to load URLs from localStorage on mount
-    useEffect(() => {
-        const savedUrls = JSON.parse(localStorage.getItem('urls'));
-        if (savedUrls) {
-            const columnsWithIds = savedUrls.map((url, index) => ({
-                id: index + 1,
-                url: url
-            }));
-            setColumns(columnsWithIds);
-        }
-    }, []);
+    const [columns, setColumns] = useState(() => {
+      if (typeof window !== 'undefined') {
+        const data = window.localStorage.getItem('columns');
+        return data !== null ? JSON.parse(data) : [];
+      }
+      return [];
+    });
 
     // useEffect hook
     useEffect(() => {
-        saveUrlsToLocalStorage(); // This function will be called automatically when 'columns' changes
+        console.log('Saving URLs to localStorage:', columns); // Add this line for debugging
+        localStorage.setItem('columns', JSON.stringify(columns));
     }, [columns]);
-
-    // Function to save URLs to localStorage
-    const saveUrlsToLocalStorage = () => {
-        const urls = columns.map(column => column.url);
-        console.log('Saving URLs to localStorage:', urls); // Add this line for debugging
-        localStorage.setItem('urls', JSON.stringify(urls));
-    };
 
     // Function to add a new column
     const addColumn = (url = '') => {
@@ -94,13 +83,13 @@ export default function Lanes() {
     };
 
     return (
-        <div>
+        <>
             <button className="btn btn-outline" id="add-column-btn" onClick={() => addColumn()}>Add</button>
             <div className="column-container">
                 {columns.map(column => (
                     <Lane key={column.id} id={column.id} url={column.url} onUrlChange={handleUrlChange} onClose={removeColumn} />
                 ))}
             </div>
-        </div>
+        </>
     );
 }

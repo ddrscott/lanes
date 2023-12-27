@@ -1,8 +1,9 @@
 # Lanes
 
-The application allows users to create "lanes," which are individual sections in the interface that host iframes pointing to various URLs.
+The application allows users to create vertical "lanes," which are individual sections in the interface that host iframes pointing to various URLs.
 Users can add, refresh, modify, and remove these lanes as needed.
 This makes it an ideal tool for anyone who needs to monitor or interact with multiple web-based resources at once, such as developers, researchers, or social media managers.
+All lanes URLs are saved to local storage
 
 ## Quick Start
 

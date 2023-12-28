@@ -2,18 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    box-sizing: border-box;
+}
+
 .column-container {
     display: flex;
     flex-direction: row;
     width: 100vw;
-    height: 98vh;
+    height: 100vh;
     overflow-x: scroll;
+    padding: .5em .5em;
+    gap: 1em;
 }
 .column {
-    min-width: 24em;
-    max-width: 90vw;
-    margin-top: 1%;
-    margin-left: 1%;
     background-color: #f0f0f0;
     display: flex;
     flex-direction: column;

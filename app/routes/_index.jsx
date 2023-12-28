@@ -35,7 +35,7 @@ function Lane({ id, url, onUrlChange, onClose }) {
                     onKeyDown={handleInputKeyDown}
                     style={{width: "calc(100% - 2em)"}}
                 />
-                <button className="btn join-item btn-sm" onClick={() => onClose(id)}>Close</button>
+                <button className="btn join-item btn-sm" onClick={() => onClose(id)}>X</button>
             </div>
             <iframe
                 src={iframeUrl}
@@ -84,7 +84,7 @@ export default function Lanes() {
 
     return (
         <>
-            <button className="btn btn-outline" id="add-column-btn" onClick={() => addColumn()}>Add</button>
+            <button className="btn btn-sm btn-circle" id="add-column-btn" onClick={() => addColumn()}>+</button>
             <div className="column-container">
                 {columns.map(column => (
                     <Lane key={column.id} id={column.id} url={column.url} onUrlChange={handleUrlChange} onClose={removeColumn} />
